@@ -10,6 +10,14 @@ cur = ''
 word_buffer = []
 current_word = ''
 
+def split_prefix(s):
+    for i, c in enumerate(s.lower()):
+        if c in 'aeiou':
+            return s[:i], s[i:]
+        elif i > 0 and c == 'y':
+            return s[:i], s[i:]
+    return '', s
+
 def spoonerize():
     global word_buffer
     #print(word_buffer)
@@ -32,22 +40,16 @@ def spoonerize():
         word_buffer[1] += s2
         word_buffer = word_buffer[:2]
         return
-    if s1[0].lower() in 'aeiou':
+    p1, s1 = split_prefix(s1)
+    if p1 == '':
         print(s1 + word_buffer[1], end='')
         word_buffer = word_buffer[2:]
         return
-    if s2[0].lower() in 'aeiou':
+    p2, s2 = split_prefix(s2)
+    if p2 == '':
         word_buffer[1] += s2
         word_buffer = word_buffer[:2]
         return
-    p1 = ''
-    p2 = ''
-    while s1[0].lower() not in 'aeiou':
-        p1 += s1[0]
-        s1 = s1[1:]
-    while s2[0].lower() not in 'aeiou':
-        p2 += s2[0]
-        s2 = s2[1:]
     print(p2 + s1 + word_buffer[1] + p1 + s2, end='')
     word_buffer = []
 
