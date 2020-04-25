@@ -34,9 +34,14 @@ for lu in parse(input_idiom):
     lu_count += 1
 
 #print(replacement_candidates)
+if len(replacement_candidates) < 1:
+	print("Sorry! Input idiom has no candidates for replacement! :( Try a different one.")
+	print(" NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.")
+	exit(1)
 
-if len(replacement_candidates) <= 1:
+elif len(replacement_candidates) == 1:
 	final_replacement_candidate = replacement_candidates[0]
+
 else:
 	final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
 
@@ -57,10 +62,11 @@ replacement_flag = 1
 
 if len(possible_replacements) < 1:
 	print("Didnt find any adequate replacement sorry! Try again :)")
-	replacement_flag = 0
+	exit(2)
 
 elif len(possible_replacements) == 1:
 	final_replacement_word = possible_replacements[0]
+
 else:
 	final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
 
@@ -68,14 +74,13 @@ else:
 #print(final_replacement_word)
 
 #Make the replacement in the original idiom
-if replacement_flag == 1:
-	pos = final_replacement_candidate[2] #contains the original position of the word in the input idiom
+pos = final_replacement_candidate[2] #contains the original position of the word in the input idiom
 
-	#print(input_idiom_surface)
+#print(input_idiom_surface)
 
-	input_idiom_surface[pos] = final_replacement_word[1]
+input_idiom_surface[pos] = final_replacement_word[1]
 
-	#print(input_idiom_surface)
+#print(input_idiom_surface)
 
 for word in input_idiom_surface:
 	print(word, end =" ")
