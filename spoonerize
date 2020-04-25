@@ -1,0 +1,3 @@
+#!/bin/bash
+
+apertium eng-morph | python3 spoonerize.py
