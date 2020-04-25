@@ -35,7 +35,10 @@ for lu in parse(input_idiom):
 
 #print(replacement_candidates)
 
-final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
+if len(replacement_candidates) <= 1:
+	final_replacement_candidate = replacement_candidates[0]
+else:
+	final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
 
 #print("Final Replacement Candidate:")
 #print(final_replacement_candidate)
@@ -50,19 +53,29 @@ for idiom in idioms_list:
 		if lu.readings[0][0].tags == final_replacement_candidate[0].tags:
 			possible_replacements.append([lu.readings[0][0], lu.wordform])
 
-final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
+replacement_flag = 1
+
+if len(possible_replacements) < 1:
+	print("Didnt find any adequate replacement sorry! Try again :)")
+	replacement_flag = 0
+
+elif len(possible_replacements) == 1:
+	final_replacement_word = possible_replacements[0]
+else:
+	final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
 
 #print("Replacement Word:")
 #print(final_replacement_word)
 
 #Make the replacement in the original idiom
-pos = final_replacement_candidate[2] #contains the original position of the word in the input idiom
+if replacement_flag == 1:
+	pos = final_replacement_candidate[2] #contains the original position of the word in the input idiom
 
-#print(input_idiom_surface)
+	#print(input_idiom_surface)
 
-input_idiom_surface[pos] = final_replacement_word[1]
+	input_idiom_surface[pos] = final_replacement_word[1]
 
-#print(input_idiom_surface)
+	#print(input_idiom_surface)
 
 for word in input_idiom_surface:
 	print(word, end =" ")
