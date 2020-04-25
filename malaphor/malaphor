@@ -1,0 +1,3 @@
+#!/bin/bash
+
+apertium -d ../../apertium-eng eng-tagger | python3 malaphor.py
