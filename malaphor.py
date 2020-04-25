@@ -1,0 +1,71 @@
+#!/usr/bin/python3
+
+import sys
+import random
+
+input_idiom = sys.stdin.read()
+
+#n = 1 #Number of words it will replace
+
+from streamparser import parse, mainpos, reading_to_string
+
+replacement_candidates = []
+candidate_tags = ['n', 'adj', 'adv', 'vblex', 'v']
+
+#Parse Input Idiom to get a candidate for replacement
+lu_count = 0
+input_idiom_surface = []
+
+for lu in parse(input_idiom): 
+    analyses = lu.readings
+    firstreading = analyses[0]
+    surfaceform = lu.wordform
+
+    input_idiom_surface.append(surfaceform)
+
+    #print(firstreading[0].tags)
+    #print("^{}/{}$".format(surfaceform, 
+    #                       reading_to_string(firstreading)))
+    
+    for tag in candidate_tags:
+    	if tag in firstreading[0].tags:
+    		replacement_candidates.append([firstreading[0], surfaceform, lu_count])
+
+    lu_count += 1
+
+#print(replacement_candidates)
+
+final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
+
+#print("Final Replacement Candidate:")
+#print(final_replacement_candidate)
+
+#Parse Idioms list (analysed through the tagger) to find a suitable replacement
+idioms_list = open('eng-idioms-analysed.txt', 'r').read().split('\n')
+
+possible_replacements = []
+
+for idiom in idioms_list:
+	for lu in parse(idiom):
+		if lu.readings[0][0].tags == final_replacement_candidate[0].tags:
+			possible_replacements.append([lu.readings[0][0], lu.wordform])
+
+final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
+
+#print("Replacement Word:")
+#print(final_replacement_word)
+
+#Make the replacement in the original idiom
+pos = final_replacement_candidate[2] #contains the original position of the word in the input idiom
+
+#print(input_idiom_surface)
+
+input_idiom_surface[pos] = final_replacement_word[1]
+
+#print(input_idiom_surface)
+
+for word in input_idiom_surface:
+	print(word, end =" ")
+
+
+
