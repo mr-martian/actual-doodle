@@ -3,7 +3,19 @@
 import sys
 import random
 
-input_idiom = sys.stdin.read()
+random_flag = 0
+idioms_list = open('eng-idioms-analysed.txt', 'r').read().split('\n')
+
+if len(sys.argv) > 2:
+	print("Too many Args!")
+	sys.exit(3)
+
+if len(sys.argv) == 2 and sys.argv[1] == '-r':
+	random_flag = 1
+	input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
+
+else:
+	input_idiom = sys.stdin.read()
 
 #n = 1 #Number of words it will replace
 
@@ -37,7 +49,7 @@ for lu in parse(input_idiom):
 if len(replacement_candidates) < 1:
 	print("Sorry! Input idiom has no candidates for replacement! :( Try a different one.")
 	print(" NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.")
-	exit(1)
+	sys.exit(1)
 
 elif len(replacement_candidates) == 1:
 	final_replacement_candidate = replacement_candidates[0]
@@ -49,7 +61,6 @@ else:
 #print(final_replacement_candidate)
 
 #Parse Idioms list (analysed through the tagger) to find a suitable replacement
-idioms_list = open('eng-idioms-analysed.txt', 'r').read().split('\n')
 
 possible_replacements = []
 
@@ -62,7 +73,7 @@ replacement_flag = 1
 
 if len(possible_replacements) < 1:
 	print("Didnt find any adequate replacement sorry! Try again :)")
-	exit(2)
+	sys.exit(2)
 
 elif len(possible_replacements) == 1:
 	final_replacement_word = possible_replacements[0]
@@ -84,6 +95,8 @@ input_idiom_surface[pos] = final_replacement_word[1]
 
 for word in input_idiom_surface:
 	print(word, end =" ")
+print('')
 
+sys.exit(0)
 
 
