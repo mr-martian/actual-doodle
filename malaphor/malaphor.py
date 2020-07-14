@@ -9,15 +9,15 @@ random_flag = 0
 idioms_list = open('eng-idioms-analysed.txt', 'r').read().split('\n')
 
 if len(sys.argv) > 2:
-	print("Too many Args!")
-	sys.exit(3)
+    print("Too many Args!")
+    sys.exit(3)
 
 if len(sys.argv) == 2 and sys.argv[1] == '-r':
-	random_flag = 1
-	input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
+    random_flag = 1
+    input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
 
 else:
-	input_idiom = sys.stdin.read()
+    input_idiom = sys.stdin.read()
 
 from streamparser import parse, mainpos, reading_to_string
 
@@ -41,8 +41,8 @@ for lu in parse(input_idiom):
                                reading_to_string(firstreading)))
     
     for tag in candidate_tags:
-    	if tag in firstreading[0].tags:
-    		replacement_candidates.append([firstreading[0], surfaceform, lu_count])
+        if tag in firstreading[0].tags:
+            replacement_candidates.append([firstreading[0], surfaceform, lu_count])
 
     lu_count += 1
 
@@ -50,15 +50,15 @@ if debug:
     print(replacement_candidates)
 
 if len(replacement_candidates) < 1:
-	sys.stderr.write("Sorry! Input idiom has no candidates for replacement! :( Try a different one.\n")
-	sys.stderr.write("NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.\n")
-	sys.exit(1)
+    sys.stderr.write("Sorry! Input idiom has no candidates for replacement! :( Try a different one.\n")
+    sys.stderr.write("NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.\n")
+    sys.exit(1)
 
 elif len(replacement_candidates) == 1:
-	final_replacement_candidate = replacement_candidates[0]
+    final_replacement_candidate = replacement_candidates[0]
 
 else:
-	final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
+    final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
 
 if debug:
     print("Final Replacement Candidate:")
@@ -69,21 +69,21 @@ if debug:
 possible_replacements = []
 
 for idiom in idioms_list:
-	for lu in parse(idiom):
-		if lu.readings[0][0].tags == final_replacement_candidate[0].tags:
-			possible_replacements.append([lu.readings[0][0], lu.wordform])
+    for lu in parse(idiom):
+        if lu.readings[0][0].tags == final_replacement_candidate[0].tags:
+            possible_replacements.append([lu.readings[0][0], lu.wordform])
 
 replacement_flag = 1
 
 if len(possible_replacements) < 1:
-	sys.stderr.write("Didnt find any adequate replacement sorry! Try again :)")
-	sys.exit(2)
+    sys.stderr.write("Didnt find any adequate replacement sorry! Try again :)")
+    sys.exit(2)
 
 elif len(possible_replacements) == 1:
-	final_replacement_word = possible_replacements[0]
+    final_replacement_word = possible_replacements[0]
 
 else:
-	final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
+    final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
 
 if debug:
     print("Replacement Word:")
@@ -101,7 +101,7 @@ if debug:
     print(input_idiom_surface)
 
 for word in input_idiom_surface:
-	print(word, end =" ")
+    print(word, end =" ")
 print('')
 
 sys.exit(0)
