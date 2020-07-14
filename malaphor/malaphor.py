@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+debug = False
+
 import sys
 import random
 
@@ -17,8 +19,6 @@ if len(sys.argv) == 2 and sys.argv[1] == '-r':
 else:
 	input_idiom = sys.stdin.read()
 
-#n = 1 #Number of words it will replace
-
 from streamparser import parse, mainpos, reading_to_string
 
 replacement_candidates = []
@@ -35,9 +35,10 @@ for lu in parse(input_idiom):
 
     input_idiom_surface.append(surfaceform)
 
-    #print(firstreading[0].tags)
-    #print("^{}/{}$".format(surfaceform, 
-    #                       reading_to_string(firstreading)))
+    if debug:
+        print(firstreading[0].tags)
+        print("^{}/{}$".format(surfaceform, 
+                               reading_to_string(firstreading)))
     
     for tag in candidate_tags:
     	if tag in firstreading[0].tags:
@@ -45,7 +46,9 @@ for lu in parse(input_idiom):
 
     lu_count += 1
 
-#print(replacement_candidates)
+if debug:
+    print(replacement_candidates)
+
 if len(replacement_candidates) < 1:
 	sys.stderr.write("Sorry! Input idiom has no candidates for replacement! :( Try a different one.\n")
 	sys.stderr.write("NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.\n")
@@ -57,8 +60,9 @@ elif len(replacement_candidates) == 1:
 else:
 	final_replacement_candidate = replacement_candidates[random.randint(0,len(replacement_candidates)-1)]
 
-#print("Final Replacement Candidate:")
-#print(final_replacement_candidate)
+if debug:
+    print("Final Replacement Candidate:")
+    print(final_replacement_candidate)
 
 #Parse Idioms list (analysed through the tagger) to find a suitable replacement
 
@@ -81,17 +85,20 @@ elif len(possible_replacements) == 1:
 else:
 	final_replacement_word = possible_replacements[random.randint(0,len(possible_replacements)-1)]
 
-#print("Replacement Word:")
-#print(final_replacement_word)
+if debug:
+    print("Replacement Word:")
+    print(final_replacement_word)
 
 #Make the replacement in the original idiom
 pos = final_replacement_candidate[2] #contains the original position of the word in the input idiom
 
-#print(input_idiom_surface)
+if debug:
+    print(input_idiom_surface)
 
 input_idiom_surface[pos] = final_replacement_word[1]
 
-#print(input_idiom_surface)
+if debug:
+    print(input_idiom_surface)
 
 for word in input_idiom_surface:
 	print(word, end =" ")
