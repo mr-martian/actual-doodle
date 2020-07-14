@@ -47,8 +47,8 @@ for lu in parse(input_idiom):
 
 #print(replacement_candidates)
 if len(replacement_candidates) < 1:
-	print("Sorry! Input idiom has no candidates for replacement! :( Try a different one.")
-	print(" NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.")
+	sys.stderr.write("Sorry! Input idiom has no candidates for replacement! :( Try a different one.\n")
+	sys.stderr.write("NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.\n")
 	sys.exit(1)
 
 elif len(replacement_candidates) == 1:
@@ -72,7 +72,7 @@ for idiom in idioms_list:
 replacement_flag = 1
 
 if len(possible_replacements) < 1:
-	print("Didnt find any adequate replacement sorry! Try again :)")
+	sys.stderr.write("Didnt find any adequate replacement sorry! Try again :)")
 	sys.exit(2)
 
 elif len(possible_replacements) == 1:
