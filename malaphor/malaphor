@@ -1,9 +1,0 @@
-#!/bin/bash
-eng=${1:-${APERTIUM_ENG:-../../apertium-eng}}
-#That means "the first argument if there is one, otherwise the APERTIUM_ENG env var if there is one, otherwise ../../apertium-eng
-if [ "$eng" == "installed" ]; then
-	comm='apertium eng-tagger'
-else
-	comm="apertium -d $eng eng-tagger"
-fi
-$comm | python3 malaphor.py
