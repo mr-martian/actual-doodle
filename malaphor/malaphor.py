@@ -70,7 +70,7 @@ def malaphor(input_idiom, lang):
         print("Final Replacement Candidate:")
         print(final_replacement_candidate)
 
-    #Parse Idioms list (analysed through the tagger) to find a suitable replacement
+    #Parse Idioms list (analysed through the morph) to find a suitable replacement
 
     possible_replacements = []
 
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     group.add_argument('-p', '--path', help='Path to Apertium monolingual package (can also be specified with env var APERTIUM_XYZ e.g. APERTIUM_ENG)')
     group.add_argument('-i', '--installed', help='Apertium monolingual package is installed with packaging (can also be specified with env var APERTIUM_XYZ == "installed")', action='store_true')
     group.add_argument('-r', '--random', help='Ignore stdin and generate a random malaphor (does not need apertium)', action='store_true')
-    group.add_argument('-t', '--tagged', help='stdin has already been tagged', action='store_true')
+    group.add_argument('-a', '--analysed', help='stdin has already been analysed', action='store_true')
     args = parser.parse_args()
     lang = args.lang
     if args.random:
@@ -130,17 +130,17 @@ if __name__ == '__main__':
         input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
     else:
         input_idiom = sys.stdin.read()
-        if not args.tagged:
+        if not args.analysed:
             if args.installed:
-                command = ['apertium', f'{lang}-tagger',]
+                command = ['apertium', f'{lang}-morph',]
             elif args.path:
-                command = ['apertium', '-d', args.path, f'{lang}-tagger',]
+                command = ['apertium', '-d', args.path, f'{lang}-morph',]
             else:
                 try:
                     if os.environ[f'APERTIUM_{lang.upper()}'] == 'installed':
-                        command = ['apertium', f'{lang}-tagger',]
+                        command = ['apertium', f'{lang}-morph',]
                     else:
-                        command = ['apertium', '-d', os.environ[f'APERTIUM_{lang.upper()}'], f'{lang}-tagger',]
+                        command = ['apertium', '-d', os.environ[f'APERTIUM_{lang.upper()}'], f'{lang}-morph',]
                 except KeyError:
                     sys.stderr.write(f'error: apertium-{lang} needed and location not specified\nsee --help')
                     sys.exit(3)
