@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-debug = False
+lang = 'spa'
+debug = False 
 
 import sys
 import random
@@ -21,7 +22,7 @@ class NoReplacement(Exception):
 
 
 random_flag = 0
-idioms_list = open('eng-idioms-analysed.txt', 'r').read().split('\n')
+idioms_list = open(f'{lang}-idioms-analysed.txt', 'r').read().split('\n')
 
 
 def malaphor(input_idiom):
@@ -33,7 +34,11 @@ def malaphor(input_idiom):
     input_idiom_surface = []
 
     for lu in parse(input_idiom): 
+        if debug:
+            print(lu)
         analyses = lu.readings
+        if debug:
+            print(analyses)
         firstreading = analyses[0]
         surfaceform = lu.wordform
 
@@ -114,9 +119,9 @@ def malaphor(input_idiom):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-p', '--eng-path', help='Path to apertium-eng (can also be specified with env var APERTIUM_ENG)')
-    group.add_argument('-i', '--eng-installed', help='apertium-eng is installed with packaging (can also be specified with env var APERTIUM_ENG == "installed")', action='store_true')
-    group.add_argument('-r', '--random', help='Ignore stdin and generate a random malaphor (does not need apertium-eng)', action='store_true')
+    group.add_argument('-p', '--path', help=f'Path to apertium-{lang} (can also be specified with env var APERTIUM_{lang.upper()})')
+    group.add_argument('-i', '--installed', help=f'apertium-{lang} is installed with packaging (can also be specified with env var APERTIUM_{lang.upper()} == "installed")', action='store_true')
+    group.add_argument('-r', '--random', help='Ignore stdin and generate a random malaphor (does not need apertium)', action='store_true')
     group.add_argument('-t', '--tagged', help='stdin has already been tagged', action='store_true')
     args = parser.parse_args()
 
@@ -126,18 +131,18 @@ if __name__ == '__main__':
     else:
         input_idiom = sys.stdin.read()
         if not args.tagged:
-            if args.eng_installed:
-                command = ['apertium', 'eng-tagger',]
-            elif args.eng_path:
-                command = ['apertium', '-d', args.eng_path, 'eng-tagger',]
+            if args.installed:
+                command = ['apertium', f'{lang}-tagger',]
+            elif args.path:
+                command = ['apertium', '-d', args.path, f'{lang}-tagger',]
             else:
                 try:
-                    if os.environ['APERTIUM_ENG'] == 'installed':
-                        command = ['apertium', 'eng-tagger',]
+                    if os.environ[f'APERTIUM_{lang.upper()}'] == 'installed':
+                        command = ['apertium', f'{lang}-tagger',]
                     else:
-                        command = ['apertium', '-d', os.environ['APERTIUM_ENG'], 'eng-tagger',]
+                        command = ['apertium', '-d', os.environ[f'APERTIUM_{lang.upper()}'], f'{lang}-tagger',]
                 except KeyError:
-                    sys.stderr.write('error: apertium-eng needed and location not specified\nsee --help')
+                    sys.stderr.write(f'error: apertium-{lang} needed and location not specified\nsee --help')
                     sys.exit(3)
             proc = subprocess.run(command, universal_newlines=True, input=input_idiom, stdout=subprocess.PIPE)
             input_idiom = proc.stdout

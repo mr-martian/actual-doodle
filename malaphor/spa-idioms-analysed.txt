@@ -1,0 +1,19 @@
+^Empezar/empezar<vblex><inf>$ ^la/el<det><def><f><sg>/lo<prn><pro><p3><f><sg>$ ^casa/casa<n><f><sg>/casar<vblex><pri><p3><sg>/casar<vblex><imp><p2><sg>$ ^por/por<pr>$ ^el/el<det><def><m><sg>$ ^tejado/tejado<n><m><sg>$
+^Estar/estar<vblex><inf>$ ^más/más<adv>/más<adj><mf><sp>$ ^sano/sano<adj><m><sg>/sanar<vblex><pri><p1><sg>$ ^que/que<cnjsub>/que<rel><an><mf><sp>$ ^una/uno<num><f><sp>/uno<prn><tn><f><sg>/uno<det><ind><f><sg>/unir<vblex><prs><p3><sg>/unir<vblex><prs><p1><sg>/unir<vblex><imp><p3><sg>$ ^pera/pera<n><f><sg>$
+^Echar/echar<vblex><inf>$ ^agua/agua<n><f><sg>/aguar<vblex><pri><p3><sg>/aguar<vblex><imp><p2><sg>$ ^al/a<pr>+el<det><def><m><sg>$ ^mar/mar<n><m><sg>/mar<n><f><sg>/mar<n><mf><sg>$
+^Arrimar/arrimar<vblex><inf>$ ^el/el<det><def><m><sg>$ ^ascua/ascua<n><f><sg>$ ^a/a<pr>$ ^su/suyo<det><pos><mf><sg>$ ^sardina/sardina<n><f><sg>$
+^no/no<adv>/no<ij>$ ^saber ni papa/saber<vblex><inf># ni papa$ ^de/de<pr>$ ^algo/algo<preadv>/algo<adj><m><sg>/algo<prn><tn><nt><sg>$
+^Ver/ver<vblex><inf>$ ^todo/todo<predet><m><sg>/todo<predet><nt><sp>/todo<prn><tn><m><sg>$ ^color/color<n><m><sg>$ ^de/de<pr>$ ^rosa/rosa<adj><mf><sg>/rosa<adj><mf><sp>/rosa<n><m><sg>/rosa<n><f><sg>$
+^Dar/dar<vblex><inf>$ ^gato/gato<n><m><sg>$ ^por/por<pr>$ ^liebre/liebre<n><f><sg>$
+^Estar/estar<vblex><inf>$ ^como/como<adv>/como<cnjadv>/como<pr>/como<rel><adv>/comer<vblex><pri><p1><sg>$ ^una/uno<num><f><sp>/uno<prn><tn><f><sg>/uno<det><ind><f><sg>/unir<vblex><prs><p3><sg>/unir<vblex><prs><p1><sg>/unir<vblex><imp><p3><sg>$ ^cabra/cabra<n><f><sg>$
+^Tener/tener<vblex><inf>$ ^más/más<adv>/más<adj><mf><sp>$ ^vidas/vida<n><f><pl>$ ^que/que<cnjsub>/que<rel><an><mf><sp>$ ^un/uno<det><ind><m><sg>$ ^gato/gato<n><m><sg>$
+^Ser/ser<vbser><inf>/ser<n><m><sg>$ ^más/más<adv>/más<adj><mf><sp>$ ^astuto/astuto<adj><m><sg>$ ^que/que<cnjsub>/que<rel><an><mf><sp>$ ^un/uno<det><ind><m><sg>$ ^zorro/zorro<n><m><sg>$
+^Ser/ser<vbser><inf>/ser<n><m><sg>$ ^del/de<pr>+el<det><def><m><sg>$ ^año/año<n><m><sg>$ ^de/de<pr>$ ^la/el<det><def><f><sg>/lo<prn><pro><p3><f><sg>$ ^pera/pera<n><f><sg>$
+^No/no<adv>/no<ij>$ ^importar un pepino/importar<vblex><inf># un pepino$
+^Dar/dar<vblex><inf>$ ^la/el<det><def><f><sg>/lo<prn><pro><p3><f><sg>$ ^vuelta a/volver<vblex><pp><f><sg># a$ ^la/el<det><def><f><sg>/lo<prn><pro><p3><f><sg>$ ^tortilla/tortilla<n><f><sg>$
+^Ser/ser<vbser><inf>/ser<n><m><sg>$ ^la/el<det><def><f><sg>/lo<prn><pro><p3><f><sg>$ ^gallina/gallina<n><f><sg>$ ^de/de<pr>$ ^los/el<det><def><m><pl>/lo<prn><pro><p3><m><pl>$ ^huevos/huevo<n><m><pl>$ ^de/de<pr>$ ^oro/oro<n><m><sg>/orar<vblex><pri><p1><sg>$
+^Estar/estar<vblex><inf>$ ^hasta en la sopa/hasta en la sopa<adv>$
+^Dar/dar<vblex><inf>$ ^en/en<pr>$ ^el/el<det><def><m><sg>$ ^clavo/clavo<n><m><sg>/clavar<vblex><pri><p1><sg>$
+^Dormirse en los laureles/dormir<vblex><inf>+se<prn><enc><ref><p3><mf><sp># en los laureles$
+^Matar/matar<vblex><inf>$ ^dos/dos<num><mf><sp>$ ^pájaros/pájaro<n><m><pl>$ ^de/de<pr>$ ^un/uno<det><ind><m><sg>$ ^tiro/tiro<n><m><sg>/tirar<vblex><pri><p1><sg>$
+^Pasarse/pasar<vblex><inf>+se<prn><enc><ref><p3><mf><sp>$ ^de/de<pr>$ ^la/el<det><def><f><sg>/lo<prn><pro><p3><f><sg>$ ^raya/raya<n><f><sg>/raer<vblex><prs><p3><sg>/raer<vblex><prs><p1><sg>/raer<vblex><imp><p3><sg>/rayar<vblex><pri><p3><sg>/rayar<vblex><imp><p2><sg>$^./.<sent>$
