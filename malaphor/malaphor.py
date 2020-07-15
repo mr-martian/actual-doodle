@@ -117,14 +117,23 @@ def malaphor(input_idiom, lang):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-l', '--lang', help='Language to use as three letter code, defaults to eng', default='eng')
+    parser.add_argument('-l', '--lang', help='Language to use as three letter code, defaults to eng (can also be specified with env var APERTIUM_LANG)', default='envvar')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-p', '--path', help='Path to Apertium monolingual package (can also be specified with env var APERTIUM_XYZ e.g. APERTIUM_ENG)')
-    group.add_argument('-i', '--installed', help='Apertium monolingual package is installed with packaging (can also be specified with env var APERTIUM_XYZ == "installed")', action='store_true')
+    group.add_argument('-i', '--installed', help='Apertium monolingual package is installed with packaging (default)', action='store_true')
     group.add_argument('-r', '--random', help='Ignore stdin and generate a random malaphor (does not need apertium)', action='store_true')
     group.add_argument('-a', '--analysed', help='stdin has already been analysed', action='store_true')
     args = parser.parse_args()
+
     lang = args.lang
+    if lang == 'envvar':
+        try:
+            lang = os.environ['APERTIUM_LANG']
+        except KeyError:
+            lang = 'eng'
+            
+    idioms_list = open(f'{lang}-idioms-analysed.txt', 'r').read().split('\n')
+
     if args.random:
         random_flag = 1
         input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
@@ -137,13 +146,9 @@ if __name__ == '__main__':
                 command = ['apertium', '-d', args.path, f'{lang}-morph',]
             else:
                 try:
-                    if os.environ[f'APERTIUM_{lang.upper()}'] == 'installed':
-                        command = ['apertium', f'{lang}-morph',]
-                    else:
-                        command = ['apertium', '-d', os.environ[f'APERTIUM_{lang.upper()}'], f'{lang}-morph',]
+                    command = ['apertium', '-d', os.environ[f'APERTIUM_{lang.upper()}'], f'{lang}-morph',]
                 except KeyError:
-                    sys.stderr.write(f'error: apertium-{lang} needed and location not specified\nsee --help')
-                    sys.exit(3)
+                    command = ['apertium', f'{lang}-morph',]
             proc = subprocess.run(command, universal_newlines=True, input=input_idiom, stdout=subprocess.PIPE)
             input_idiom = proc.stdout
     
