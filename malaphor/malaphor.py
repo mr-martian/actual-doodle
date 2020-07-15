@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-lang = 'spa'
 debug = False 
 
 import sys
@@ -22,10 +21,10 @@ class NoReplacement(Exception):
 
 
 random_flag = 0
-idioms_list = open(f'{lang}-idioms-analysed.txt', 'r').read().split('\n')
 
 
-def malaphor(input_idiom):
+def malaphor(input_idiom, lang):
+    idioms_list = open(f'{lang}-idioms-analysed.txt', 'r').read().split('\n')
     replacement_candidates = []
     candidate_tags = ['n', 'adj', 'adv', 'vblex', 'v']
 
@@ -118,13 +117,14 @@ def malaphor(input_idiom):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('-l', '--lang', help='Language to use as three letter code, defaults to eng', default='eng')
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-p', '--path', help=f'Path to apertium-{lang} (can also be specified with env var APERTIUM_{lang.upper()})')
-    group.add_argument('-i', '--installed', help=f'apertium-{lang} is installed with packaging (can also be specified with env var APERTIUM_{lang.upper()} == "installed")', action='store_true')
+    group.add_argument('-p', '--path', help='Path to Apertium monolingual package (can also be specified with env var APERTIUM_XYZ e.g. APERTIUM_ENG)')
+    group.add_argument('-i', '--installed', help='Apertium monolingual package is installed with packaging (can also be specified with env var APERTIUM_XYZ == "installed")', action='store_true')
     group.add_argument('-r', '--random', help='Ignore stdin and generate a random malaphor (does not need apertium)', action='store_true')
     group.add_argument('-t', '--tagged', help='stdin has already been tagged', action='store_true')
     args = parser.parse_args()
-
+    lang = args.lang
     if args.random:
         random_flag = 1
         input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
@@ -148,7 +148,7 @@ if __name__ == '__main__':
             input_idiom = proc.stdout
     
     try:
-        print(malaphor(input_idiom))
+        print(malaphor(input_idiom, lang))
     except NoCandidatesForReplacement:
         sys.stderr.write("Sorry! Input idiom has no candidates for replacement! :( Try a different one.\n")
         sys.stderr.write("NOTE: This could be because Apertium recognises this idiom and hence doesn't provide analyses for the words.\n")
