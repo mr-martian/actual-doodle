@@ -5,6 +5,10 @@ debug = False
 import sys
 import random
 import string
+import argparse
+import os
+import subprocess
+import io
 from streamparser import parse, mainpos, reading_to_string
 
 
@@ -100,7 +104,7 @@ def malaphor(input_idiom):
     out = ''
 
     for word in input_idiom_surface:
-        if out != '' and word[0] in string.ascii_letters:
+        if out != '' and word[0] in string.ascii_letters + string.digits:
             out += ' ' + word
         else:
             out += word
@@ -108,16 +112,35 @@ def malaphor(input_idiom):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
-        sys.stderr.write("Too many Args!\n")
-        sys.exit(3)
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-p', '--eng-path', help='Path to apertium-eng (can also be specified with env var APERTIUM_ENG)')
+    group.add_argument('-i', '--eng-installed', help='apertium-eng is installed with packaging (can also be specified with env var APERTIUM_ENG == "installed")', action='store_true')
+    group.add_argument('-r', '--random', help='Ignore stdin and generate a random malaphor (does not need apertium-eng)', action='store_true')
+    group.add_argument('-t', '--tagged', help='stdin has already been tagged', action='store_true')
+    args = parser.parse_args()
 
-    if len(sys.argv) == 2 and sys.argv[1] == '-r':
+    if args.random:
         random_flag = 1
         input_idiom = idioms_list[random.randint(0,len(idioms_list)-1)]
-
     else:
         input_idiom = sys.stdin.read()
+        if not args.tagged:
+            if args.eng_installed:
+                command = ['apertium', 'eng-tagger',]
+            elif args.eng_path:
+                command = ['apertium', '-d', args.eng_path, 'eng-tagger',]
+            else:
+                try:
+                    if os.environ['APERTIUM_ENG'] == 'installed':
+                        command = ['apertium', 'eng-tagger',]
+                    else:
+                        command = ['apertium', '-d', os.environ['APERTIUM_ENG'], 'eng-tagger',]
+                except KeyError:
+                    sys.stderr.write('error: apertium-eng needed and location not specified\nsee --help')
+                    sys.exit(3)
+            proc = subprocess.run(command, universal_newlines=True, input=input_idiom, stdout=subprocess.PIPE)
+            input_idiom = proc.stdout
     
     try:
         print(malaphor(input_idiom))
